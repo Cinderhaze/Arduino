@@ -18,9 +18,6 @@
 const int button1Pin = 2;  // pushbutton 1 pin
 const int button2Pin = 3;  // pushbutton 2 pin
 const int ledPin =  13;    // LED pin
-const int timeOn = 5000;
-
-long timeToTurnOff = 0;
 
 int inDebounce = true;
 long lastDebounceTime = 0;  // the last time the output pin was toggled
@@ -29,8 +26,7 @@ long debounceDelay = 50;    // the debounce time; increase if the output flicker
 const int servoPin = 9;
 Servo servo1;  // servo control object
 int servoDirection = -1; //Figure out which one is left and which one is right
-int servoPosition = 0;
-//int servoShouldMove = false; // Consider rolling the servoDirection into an enum.. LEFT (-1), STOP(0), RIGHT (1) for this portion of the logic
+int servoPosition = 0; // Consider rolling an enum.. LEFT (-1), STOP(0), RIGHT (1) for this portion of the logic
 
 
 void setup()
@@ -69,7 +65,6 @@ void loop()
   {
     //Stop the motion if it is moving
     digitalWrite(ledPin, LOW);  // turn the LED on
-    timeToTurnOff = millis() + timeOn;
     
     servoDirection = 0;
     
@@ -79,22 +74,15 @@ void loop()
   {
     //Move Left
     digitalWrite(ledPin, HIGH);  // turn the LED on
-    timeToTurnOff = millis() + timeOn;
+    
     servoDirection = 1;
     
   } else if(button2State == LOW) 
   {
     //Move Right
     digitalWrite(ledPin, HIGH);  // turn the LED on
-    timeToTurnOff = millis() + timeOn;
     servoDirection = -1;
-    
   }
-   
-//  if(millis()> timeToTurnOff) {
-//    digitalWrite(ledPin, LOW);
-//    servoDirection = 0;
-//  }
 
   
 //  if ((millis() - lastDebounceTime) > debounceDelay) {
